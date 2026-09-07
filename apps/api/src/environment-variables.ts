@@ -13,6 +13,9 @@ const schema = z.object({
   CLOUDFLARE_R2_SECRET_ACCESS_KEY: z.string(),
   CLOUDFLARE_R2_BUCKET_NAME: z.string(),
   CLOUDFLARE_R2_ASSETS_URL: z.string(),
+  // Email
+  RESEND_API_KEY: z.string(),
+  MAIL_FROM: z.string(),
 })
 
 const _env = schema.safeParse(process.env)
