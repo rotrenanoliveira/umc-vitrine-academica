@@ -13,7 +13,7 @@ describe('(UC) - Fetch Tags', () => {
 
   it('should be able to fetch all tags', async () => {
     for (let i = 0; i < 5; i++) {
-      const tag = makeTag({ name: `tag-${i}` })
+      const { tag } = makeTag({ name: `tag-${i}` })
       tagsRepository.items.push(tag)
     }
 
