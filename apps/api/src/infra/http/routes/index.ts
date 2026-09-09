@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import { deleteAttachmentRoute } from './attachments/delete-attachment'
 import { getAttachmentRoute } from './attachments/get-attachment'
 import { uploadAttachmentRoute } from './attachments/upload-attachment'
+import { findUserByIdRoute } from './users/find-user-by-id'
 import { registerUserRoute } from './users/register-user'
 
 /**
@@ -19,4 +20,6 @@ export async function routes(app: FastifyInstance) {
   /** Users routes */
   /** POST /users */
   await app.register(registerUserRoute)
+  /** GET /users/:userId */
+  await app.register(findUserByIdRoute)
 }

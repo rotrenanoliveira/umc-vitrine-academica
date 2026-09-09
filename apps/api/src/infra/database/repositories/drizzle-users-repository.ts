@@ -18,6 +18,16 @@ export class DrizzleUsersRepository implements UsersRepository {
     return DrizzleUserMapper.toDomain(row)
   }
 
+  async findById(id: string): Promise<User | null> {
+    const [row] = await this.db.select().from(users).where(eq(users.id, id)).limit(1)
+
+    if (!row) {
+      return null
+    }
+
+    return DrizzleUserMapper.toDomain(row)
+  }
+
   async create(user: User): Promise<void> {
     await this.db.insert(users).values(DrizzleUserMapper.toPersistence(user))
   }
