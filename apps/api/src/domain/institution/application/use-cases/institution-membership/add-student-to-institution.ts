@@ -47,8 +47,8 @@ export class AddStudentToInstitutionUseCase {
     }
 
     const existing = await this.membersRepository.findByUserInstitutionAndType(
-      institutionId,
       userId,
+      institutionId,
       InstitutionMemberType.STUDENT,
     )
 
