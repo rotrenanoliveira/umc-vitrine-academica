@@ -2,14 +2,14 @@ import type { FastifyReply } from 'fastify'
 import type { FindTagByIdUseCase } from '@/domain/tag/application/use-cases/find-tag-by-id'
 import { TagPresenter } from '../../presenters/tag-presenter'
 
-interface FindTagByIdParams {
+interface Params {
   tagId: string
 }
 
 export class FindTagByIdController {
   constructor(private readonly findTagById: FindTagByIdUseCase) {}
 
-  async handle({ tagId }: FindTagByIdParams, reply: FastifyReply) {
+  async handle({ tagId }: Params, reply: FastifyReply) {
     const result = await this.findTagById.execute({ id: tagId })
 
     if (result.isLeft()) {

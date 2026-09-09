@@ -2,14 +2,14 @@ import type { FastifyReply } from 'fastify'
 import type { RegisterTagUseCase } from '@/domain/tag/application/use-cases/register-tag'
 import { TagPresenter } from '../../presenters/tag-presenter'
 
-interface RegisterTagBody {
+interface Body {
   name: string
 }
 
 export class RegisterTagController {
   constructor(private readonly registerTag: RegisterTagUseCase) {}
 
-  async handle({ name }: RegisterTagBody, reply: FastifyReply) {
+  async handle({ name }: Body, reply: FastifyReply) {
     const result = await this.registerTag.execute({ name })
 
     if (result.isLeft()) {

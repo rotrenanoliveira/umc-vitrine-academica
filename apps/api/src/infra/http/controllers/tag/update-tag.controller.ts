@@ -2,18 +2,18 @@ import type { FastifyReply } from 'fastify'
 import type { UpdateTagUseCase } from '@/domain/tag/application/use-cases/update-tag'
 import { TagPresenter } from '../../presenters/tag-presenter'
 
-interface UpdateTagParams {
+interface Params {
   tagId: string
 }
 
-interface UpdateTagBody {
+interface Body {
   status: 'ACTIVE' | 'INACTIVE'
 }
 
 export class UpdateTagController {
   constructor(private readonly updateTag: UpdateTagUseCase) {}
 
-  async handle({ tagId }: UpdateTagParams, { status }: UpdateTagBody, reply: FastifyReply) {
+  async handle({ tagId }: Params, { status }: Body, reply: FastifyReply) {
     const result = await this.updateTag.execute({
       id: tagId,
       status,
