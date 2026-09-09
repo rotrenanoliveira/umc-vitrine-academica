@@ -28,7 +28,9 @@ export async function resetDatabase() {
     throw new Error('Database has not been set up. Call setupDatabase() first.')
   }
 
-  await databaseForTest.execute(sql`TRUNCATE TABLE "users", "accounts", "attachments", "logs_audit", "tags" CASCADE`)
+  await databaseForTest.execute(
+    sql`TRUNCATE TABLE "users", "accounts", "attachments", "logs_audit", "tags", "institutions", "institution_members", "institution_settings" CASCADE`,
+  )
 }
 
 export async function cleanupDatabase() {

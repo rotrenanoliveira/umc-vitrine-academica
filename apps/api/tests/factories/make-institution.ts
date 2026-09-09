@@ -16,10 +16,15 @@ import {
   InstitutionSettings,
   type InstitutionSettingsProps,
 } from '@/domain/institution/enterprise/entities/institution-settings'
+import { db } from '@/infra/database/drizzle/client'
+import { DrizzleInstitutionMapper } from '@/infra/database/drizzle/mappers/drizzle-institution-mapper'
+import { DrizzleInstitutionMemberMapper } from '@/infra/database/drizzle/mappers/drizzle-institution-member-mapper'
+import { DrizzleInstitutionSettingsMapper } from '@/infra/database/drizzle/mappers/drizzle-institution-settings-mapper'
+import { institutionMembers, institutionSettings, institutions } from '@/infra/database/drizzle/schemas'
 
 export function makeInstitution(override: Partial<InstitutionProps> = {}, id?: UniqueEntityId) {
   const institutionName = override.name ?? faker.company.name()
-  const institutionSlug = Slug.createFromText(institutionName)
+  const institutionSlug = override.slug ?? Slug.createFromText(institutionName)
 
   const institution = Institution.create(
     {
@@ -37,6 +42,14 @@ export function makeInstitution(override: Partial<InstitutionProps> = {}, id?: U
   return { institution }
 }
 
+export async function makeInstitutionOnDatabase(override: Partial<InstitutionProps> = {}, id?: UniqueEntityId) {
+  const { institution } = makeInstitution(override, id)
+
+  await db.insert(institutions).values(DrizzleInstitutionMapper.toPersistence(institution))
+
+  return { institution }
+}
+
 export function makeInstitutionSettings(override: Partial<InstitutionSettingsProps> = {}, id?: UniqueEntityId) {
   return InstitutionSettings.create(
     {
@@ -49,6 +62,17 @@ export function makeInstitutionSettings(override: Partial<InstitutionSettingsPro
   )
 }
 
+export async function makeInstitutionSettingsOnDatabase(
+  override: Partial<InstitutionSettingsProps> = {},
+  id?: UniqueEntityId,
+) {
+  const settings = makeInstitutionSettings(override, id)
+
+  await db.insert(institutionSettings).values(DrizzleInstitutionSettingsMapper.toPersistence(settings))
+
+  return { settings }
+}
+
 export function makeInstitutionMember(override: Partial<InstitutionMemberProps> = {}, id?: UniqueEntityId) {
   return InstitutionMember.create(
     {
@@ -59,4 +83,15 @@ export function makeInstitutionMember(override: Partial<InstitutionMemberProps> 
     },
     id,
   )
+}
+
+export async function makeInstitutionMemberOnDatabase(
+  override: Partial<InstitutionMemberProps> = {},
+  id?: UniqueEntityId,
+) {
+  const member = makeInstitutionMember(override, id)
+
+  await db.insert(institutionMembers).values(DrizzleInstitutionMemberMapper.toPersistence(member))
+
+  return { member }
 }
