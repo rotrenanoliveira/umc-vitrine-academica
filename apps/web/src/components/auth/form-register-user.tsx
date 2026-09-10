@@ -17,7 +17,7 @@ export function FormRegisterUser() {
   const [_, handleSubmit, isPending] = useFormState(actionRegisterUser, {
     onSuccess: (message) => {
       toast.success(message)
-      router.push('/entrar')
+      router.push('/sign-in')
       router.refresh()
     },
     onError: (message) => {
