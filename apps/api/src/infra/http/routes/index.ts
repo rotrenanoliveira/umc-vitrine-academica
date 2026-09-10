@@ -3,6 +3,7 @@ import { deleteAttachmentRoute } from './attachments/delete-attachment'
 import { getAttachmentRoute } from './attachments/get-attachment'
 import { uploadAttachmentRoute } from './attachments/upload-attachment'
 import { authenticateWithAccessCodeRoute } from './auth/authenticate-with-access-code'
+import { logoutRoute } from './auth/logout'
 import { requestAccessCodeRoute } from './auth/request-access-code'
 import { fetchUserPreferenceTagsRoute } from './preference-tags/fetch-user-preference-tags'
 import { registerPreferenceTagRoute } from './preference-tags/register-preference-tag'
@@ -35,6 +36,8 @@ export async function routes(app: FastifyInstance) {
   await app.register(requestAccessCodeRoute)
   /** POST /auth/sessions */
   await app.register(authenticateWithAccessCodeRoute)
+  /** DELETE /auth/sessions */
+  await app.register(logoutRoute)
 
   /** Users routes */
   /** POST /users */

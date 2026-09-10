@@ -1,5 +1,7 @@
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Session, type SessionProps } from '@/domain/identity/enterprise/entities/session'
+import { db } from '@/infra/database/drizzle/client'
+import { DrizzleSessionsRepository } from '@/infra/database/repositories/drizzle-sessions-repository'
 
 export function makeSession(override: Partial<SessionProps> = {}, id?: UniqueEntityId) {
   const session = Session.create(
@@ -11,6 +13,18 @@ export function makeSession(override: Partial<SessionProps> = {}, id?: UniqueEnt
     },
     id,
   )
+
+  return { session }
+}
+
+export async function makeSessionOnDatabase(
+  override: Partial<SessionProps> = {},
+  id?: UniqueEntityId,
+) {
+  const { session } = makeSession(override, id)
+
+  const sessionsRepository = new DrizzleSessionsRepository(db)
+  await sessionsRepository.create(session)
 
   return { session }
 }
