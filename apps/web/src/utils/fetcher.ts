@@ -9,15 +9,16 @@ export const responseError = z.object({
 
 export type ResponseError = z.infer<typeof responseError>
 
-/** Fetcher Response */
-type FetcherResponse<T> = [T, null] | [null, ResponseError]
 /** Fetcher Options */
-type FetcherOptions = { throw: boolean }
+type FetcherOptions = { throw?: boolean; notFound?: boolean }
 
 /** Handles errors from fetcher function, returns a tuple of [data, error] */
-export function fetcher<T>(args: Promise<T>, options: { throw: false }): Promise<[T, null] | [null, ResponseError]>
+export function fetcher<T>(
+  args: Promise<T>,
+  options: { throw: false; notFound?: boolean },
+): Promise<[T, null] | [null, ResponseError]>
 /** Handles errors from fetcher function, throws an error if options.throw is true */
-export function fetcher<T>(args: Promise<T>, options: { throw: true }): Promise<T>
+export function fetcher<T>(args: Promise<T>, options: { throw: true; notFound?: boolean }): Promise<T>
 /** Handles errors from fetcher function, returns a tuple of [data, error] */
 export function fetcher<T>(args: Promise<T>, options?: FetcherOptions): Promise<[T, null] | [null, ResponseError]>
 
@@ -39,11 +40,15 @@ export async function fetcher<T>(
     if (error instanceof HTTPError) {
       if (options.throw) throw error
 
-      if (error.response.status === 404) {
+      if (error.response.status === 404 && options.notFound !== false) {
         notFound()
       }
 
-      const message = error.data.message
+      const data = error.data
+      const message =
+        typeof data === 'object' && data !== null && 'message' in data && typeof data.message === 'string'
+          ? data.message
+          : undefined
 
       return [null, { success: false, message: message ?? error.message }]
     }
