@@ -2,6 +2,13 @@ import type { FastifyInstance } from 'fastify'
 import { deleteAttachmentRoute } from './attachments/delete-attachment'
 import { getAttachmentRoute } from './attachments/get-attachment'
 import { uploadAttachmentRoute } from './attachments/upload-attachment'
+import { fetchUserPreferenceTagsRoute } from './preference-tags/fetch-user-preference-tags'
+import { registerPreferenceTagRoute } from './preference-tags/register-preference-tag'
+import { fetchProjectsOfInterestRoute } from './projects/fetch-projects-of-interest'
+import { registerProjectTagRoute } from './projects/register-project-tag'
+import { fetchProjectsByTagRoute } from './tags/fetch-projects-by-tag'
+import { fetchTagsRoute } from './tags/fetch-tags'
+import { registerTagRoute } from './tags/register-tag'
 import { findUserByIdRoute } from './users/find-user-by-id'
 import { registerUserRoute } from './users/register-user'
 
@@ -22,4 +29,24 @@ export async function routes(app: FastifyInstance) {
   await app.register(registerUserRoute)
   /** GET /users/:userId */
   await app.register(findUserByIdRoute)
+
+  /** Tags routes */
+  /** POST /tags */
+  await app.register(registerTagRoute)
+  /** GET /tags */
+  await app.register(fetchTagsRoute)
+  /** GET /tags/:tagId/projects */
+  await app.register(fetchProjectsByTagRoute)
+
+  /** Preference tags routes */
+  /** POST /preference-tags */
+  await app.register(registerPreferenceTagRoute)
+  /** GET /users/:userId/preference-tags */
+  await app.register(fetchUserPreferenceTagsRoute)
+
+  /** Project tags routes */
+  /** POST /projects/:projectId/tags */
+  await app.register(registerProjectTagRoute)
+  /** GET /users/:userId/projects-of-interest */
+  await app.register(fetchProjectsOfInterestRoute)
 }
