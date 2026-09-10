@@ -4,7 +4,7 @@ import { defineConfig } from 'vitest/config'
 export default defineConfig({
   oxc: false,
   test: {
-    isolated: true,
+    // isolated: true,
 
     coverage: {
       enabled: false,
