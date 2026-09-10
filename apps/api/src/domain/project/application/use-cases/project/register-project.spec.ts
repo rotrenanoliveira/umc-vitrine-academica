@@ -1,6 +1,6 @@
 import { InMemoryProjectsRepository } from '@tests/repositories/in-memory-projects-repository'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { ProjectStatus } from '../../enterprise/entities/project'
+import { ProjectStatus } from '../../../enterprise/entities/project'
 import { RegisterProjectUseCase } from './register-project'
 
 let projectsRepository: InMemoryProjectsRepository
@@ -12,7 +12,7 @@ describe('(UC) - Register Project', () => {
     sut = new RegisterProjectUseCase(projectsRepository)
   })
 
-  it('should able to register a new project', async () => {
+  it('pode registrar um novo projeto', async () => {
     const authorId = new UniqueEntityId().toString()
 
     const result = await sut.execute({

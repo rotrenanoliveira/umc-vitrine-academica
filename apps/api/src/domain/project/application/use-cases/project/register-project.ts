@@ -1,7 +1,7 @@
 import { type Either, right } from '@/core/either'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { Project } from '../../enterprise/entities/project'
-import type { ProjectsRepository } from '../repositories/projects-repositories'
+import { Project } from '../../../enterprise/entities/project'
+import type { ProjectsRepository } from '../../repositories/projects-repositories'
 
 interface RegisterProjectUseCaseRequest {
   title: string
