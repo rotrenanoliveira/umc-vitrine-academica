@@ -1,3 +1,7 @@
 export * from './accounts'
 export * from './attachments'
+export * from './preference-tags'
+export * from './project-tags'
+export * from './projects'
+export * from './tags'
 export * from './users'
