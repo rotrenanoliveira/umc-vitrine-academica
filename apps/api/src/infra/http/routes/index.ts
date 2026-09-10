@@ -2,6 +2,9 @@ import type { FastifyInstance } from 'fastify'
 import { deleteAttachmentRoute } from './attachments/delete-attachment'
 import { getAttachmentRoute } from './attachments/get-attachment'
 import { uploadAttachmentRoute } from './attachments/upload-attachment'
+import { authenticateWithAccessCodeRoute } from './auth/authenticate-with-access-code'
+import { logoutRoute } from './auth/logout'
+import { requestAccessCodeRoute } from './auth/request-access-code'
 import { fetchUserPreferenceTagsRoute } from './preference-tags/fetch-user-preference-tags'
 import { registerPreferenceTagRoute } from './preference-tags/register-preference-tag'
 import { fetchProjectsOfInterestRoute } from './projects/fetch-projects-of-interest'
@@ -27,6 +30,14 @@ export async function routes(app: FastifyInstance) {
   await app.register(getAttachmentRoute)
   /** DELETE /attachments/:attachmentId */
   await app.register(deleteAttachmentRoute)
+
+  /** Auth routes */
+  /** POST /auth/access-code */
+  await app.register(requestAccessCodeRoute)
+  /** POST /auth/sessions */
+  await app.register(authenticateWithAccessCodeRoute)
+  /** DELETE /auth/sessions */
+  await app.register(logoutRoute)
 
   /** Users routes */
   /** POST /users */
