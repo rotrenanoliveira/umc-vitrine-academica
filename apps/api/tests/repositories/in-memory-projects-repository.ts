@@ -12,6 +12,10 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
     return this.items.find((project) => project.id.toString() === id) ?? null
   }
 
+  async findManyByIds(ids: string[]): Promise<Project[]> {
+    return this.items.filter((project) => ids.includes(project.id.toString()))
+  }
+
   async create(project: Project): Promise<void> {
     this.items.push(project)
   }
