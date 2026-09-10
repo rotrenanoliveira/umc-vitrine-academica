@@ -5,6 +5,7 @@ import { uploadAttachmentRoute } from './attachments/upload-attachment'
 import { fetchUserPreferenceTagsRoute } from './preference-tags/fetch-user-preference-tags'
 import { registerPreferenceTagRoute } from './preference-tags/register-preference-tag'
 import { fetchProjectsOfInterestRoute } from './projects/fetch-projects-of-interest'
+import { publishScheduledProjectsRoute } from './projects/publish-scheduled-projects'
 import { registerProjectRoute } from './projects/register-project'
 import { registerProjectTagRoute } from './projects/register-project-tag'
 import { scheduleProjectRoute } from './projects/schedule-project'
@@ -49,6 +50,8 @@ export async function routes(app: FastifyInstance) {
   /** Projects routes */
   /** POST /projects */
   await app.register(registerProjectRoute)
+  /** POST /projects/publish-scheduled */
+  await app.register(publishScheduledProjectsRoute)
   /** POST /projects/:projectId/schedule */
   await app.register(scheduleProjectRoute)
 
