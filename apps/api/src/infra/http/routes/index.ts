@@ -7,6 +7,7 @@ import { registerPreferenceTagRoute } from './preference-tags/register-preferenc
 import { fetchProjectsOfInterestRoute } from './projects/fetch-projects-of-interest'
 import { registerProjectRoute } from './projects/register-project'
 import { registerProjectTagRoute } from './projects/register-project-tag'
+import { scheduleProjectRoute } from './projects/schedule-project'
 import { fetchProjectsByTagRoute } from './tags/fetch-projects-by-tag'
 import { fetchTagsRoute } from './tags/fetch-tags'
 import { registerTagRoute } from './tags/register-tag'
@@ -48,6 +49,8 @@ export async function routes(app: FastifyInstance) {
   /** Projects routes */
   /** POST /projects */
   await app.register(registerProjectRoute)
+  /** POST /projects/:projectId/schedule */
+  await app.register(scheduleProjectRoute)
 
   /** Project tags routes */
   /** POST /projects/:projectId/tags */
