@@ -16,11 +16,7 @@ interface RegisterProjectTagBody {
 export class RegisterProjectTagController {
   constructor(private readonly registerProjectTag: RegisterProjectTagUseCase) {}
 
-  async handle(
-    { projectId }: RegisterProjectTagParams,
-    { tagId }: RegisterProjectTagBody,
-    reply: FastifyReply,
-  ) {
+  async handle({ projectId }: RegisterProjectTagParams, { tagId }: RegisterProjectTagBody, reply: FastifyReply) {
     const result = await this.registerProjectTag.execute({ projectId, tagId })
 
     if (result.isLeft()) {
@@ -38,9 +34,7 @@ export class RegisterProjectTagController {
         })
       }
 
-      return reply.status(400).send({
-        message: error.message,
-      })
+      throw error
     }
 
     return reply.status(201).send({
