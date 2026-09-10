@@ -31,9 +31,7 @@ export class RegisterPreferenceTagController {
         })
       }
 
-      return reply.status(400).send({
-        message: error.message,
-      })
+      throw error
     }
 
     return reply.status(201).send({
