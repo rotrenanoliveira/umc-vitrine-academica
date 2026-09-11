@@ -1,14 +1,17 @@
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
+import { makeAuthenticateMiddleware } from '../../factories/auth/make-authenticate-middleware'
 import { makeScheduleProjectController } from '../../factories/project/make-schedule-project-controller'
 
 export async function scheduleProjectRoute(app: FastifyInstance) {
   const scheduleProjectController = makeScheduleProjectController()
+  const authenticate = makeAuthenticateMiddleware()
 
   app.withTypeProvider<ZodTypeProvider>().post(
     '/projects/:projectId/schedule',
     {
+      onRequest: [authenticate],
       schema: {
         tags: ['projects'],
         summary: 'Agendar publicação de um projeto',
@@ -28,6 +31,12 @@ export async function scheduleProjectRoute(app: FastifyInstance) {
               createdAt: z.iso.datetime(),
             }),
           }),
+          401: z.object({
+            message: z.string(),
+          }),
+          403: z.object({
+            message: z.string(),
+          }),
           404: z.object({
             message: z.string(),
           }),
@@ -41,7 +50,14 @@ export async function scheduleProjectRoute(app: FastifyInstance) {
       },
     },
     async (request, reply) => {
-      return scheduleProjectController.handle(request.params, request.body, reply)
+      return scheduleProjectController.handle(
+        {
+          projectId: request.params.projectId,
+          authorId: request.user.sub,
+        },
+        request.body,
+        reply,
+      )
     },
   )
 }

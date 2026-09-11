@@ -1,4 +1,4 @@
-import { eq, inArray } from 'drizzle-orm'
+import { and, desc, eq, inArray } from 'drizzle-orm'
 import type { ProjectsRepository } from '@/domain/project/application/repositories/projects-repositories'
 import type { Project } from '@/domain/project/enterprise/entities/project'
 import type { DrizzleClient } from '../drizzle/client'
@@ -30,6 +30,22 @@ export class DrizzleProjectsRepository implements ProjectsRepository {
     }
 
     const rows = await this.db.select().from(projects).where(inArray(projects.id, ids))
+
+    return rows.map(DrizzleProjectMapper.toDomain)
+  }
+
+  async findManyByAuthorId(authorId: string, status?: string): Promise<Project[]> {
+    const conditions = [eq(projects.authorId, authorId)]
+
+    if (status) {
+      conditions.push(eq(projects.status, status as (typeof projects.status.enumValues)[number]))
+    }
+
+    const rows = await this.db
+      .select()
+      .from(projects)
+      .where(and(...conditions))
+      .orderBy(desc(projects.createdAt))
 
     return rows.map(DrizzleProjectMapper.toDomain)
   }

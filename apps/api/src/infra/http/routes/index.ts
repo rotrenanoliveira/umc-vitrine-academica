@@ -3,16 +3,20 @@ import { deleteAttachmentRoute } from './attachments/delete-attachment'
 import { getAttachmentRoute } from './attachments/get-attachment'
 import { uploadAttachmentRoute } from './attachments/upload-attachment'
 import { authenticateWithAccessCodeRoute } from './auth/authenticate-with-access-code'
+import { getMeRoute } from './auth/get-me'
 import { logoutRoute } from './auth/logout'
 import { requestAccessCodeRoute } from './auth/request-access-code'
 import { fetchUserPreferenceTagsRoute } from './preference-tags/fetch-user-preference-tags'
 import { registerPreferenceTagRoute } from './preference-tags/register-preference-tag'
+import { fetchMyProjectsRoute } from './projects/fetch-my-projects'
 import { fetchProjectsOfInterestRoute } from './projects/fetch-projects-of-interest'
 import { fetchPublishedProjectsRoute } from './projects/fetch-published-projects'
+import { getProjectByIdRoute } from './projects/get-project-by-id'
 import { publishScheduledProjectsRoute } from './projects/publish-scheduled-projects'
 import { registerProjectRoute } from './projects/register-project'
 import { registerProjectTagRoute } from './projects/register-project-tag'
 import { scheduleProjectRoute } from './projects/schedule-project'
+import { updateProjectRoute } from './projects/update-project'
 import { fetchProjectsByTagRoute } from './tags/fetch-projects-by-tag'
 import { fetchTagsRoute } from './tags/fetch-tags'
 import { registerTagRoute } from './tags/register-tag'
@@ -38,6 +42,8 @@ export async function routes(app: FastifyInstance) {
   await app.register(authenticateWithAccessCodeRoute)
   /** DELETE /auth/sessions */
   await app.register(logoutRoute)
+  /** GET /auth/me */
+  await app.register(getMeRoute)
 
   /** Users routes */
   /** POST /users */
@@ -62,12 +68,18 @@ export async function routes(app: FastifyInstance) {
   /** Projects routes */
   /** POST /projects */
   await app.register(registerProjectRoute)
+  /** GET /projects/me */
+  await app.register(fetchMyProjectsRoute)
   /** POST /projects/publish-scheduled */
   await app.register(publishScheduledProjectsRoute)
   /** GET /projects/published */
   await app.register(fetchPublishedProjectsRoute)
   /** POST /projects/:projectId/schedule */
   await app.register(scheduleProjectRoute)
+  /** PUT /projects/:projectId */
+  await app.register(updateProjectRoute)
+  /** GET /projects/:projectId */
+  await app.register(getProjectByIdRoute)
 
   /** Project tags routes */
   /** POST /projects/:projectId/tags */
