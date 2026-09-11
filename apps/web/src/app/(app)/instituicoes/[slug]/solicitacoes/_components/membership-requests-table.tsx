@@ -17,8 +17,12 @@ const statusLabels: Record<InstitutionMembershipRequest['status'], string> = {
   REJECTED: 'Rejeitada',
 }
 
+type MembershipRequestRow = InstitutionMembershipRequest & {
+  proofUrl: string | null
+}
+
 type MembershipRequestsTableProps = {
-  data: InstitutionMembershipRequest[]
+  data: MembershipRequestRow[]
   institutionId: string
   institutionSlug: string
 }
@@ -43,7 +47,20 @@ export function MembershipRequestsTable({ data, institutionId, institutionSlug }
               <TableCell className="font-mono text-xs">{request.userId}</TableCell>
               <TableCell>{roleLabels[request.role]}</TableCell>
               <TableCell>{statusLabels[request.status]}</TableCell>
-              <TableCell className="font-mono text-xs">{request.proofAttachmentId ?? '—'}</TableCell>
+              <TableCell>
+                {request.proofUrl ? (
+                  <a
+                    href={request.proofUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm underline underline-offset-4"
+                  >
+                    Ver comprovante
+                  </a>
+                ) : (
+                  <span className="text-muted-foreground">—</span>
+                )}
+              </TableCell>
               <TableCell>{new Date(request.createdAt).toLocaleString('pt-BR')}</TableCell>
               <TableCell>
                 {request.status === 'PENDING' ? (
