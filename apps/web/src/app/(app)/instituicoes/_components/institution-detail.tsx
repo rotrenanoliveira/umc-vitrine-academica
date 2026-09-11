@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { FormRequestInstitutionMembership } from '@/components/institution/form-request-institution-membership'
 import { Button } from '@/components/ui/button'
 import type { Institution } from '@/utils/type'
 import { InstitutionStatusActions } from './institution-status-actions'
@@ -27,9 +28,16 @@ const originLabels: Record<Institution['origin'], string> = {
 type InstitutionDetailProps = {
   institution: Institution
   isAuthenticated: boolean
+  alreadyMember: boolean
+  canManage: boolean
 }
 
-export function InstitutionDetail({ institution, isAuthenticated }: InstitutionDetailProps) {
+export function InstitutionDetail({
+  institution,
+  isAuthenticated,
+  alreadyMember,
+  canManage,
+}: InstitutionDetailProps) {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
@@ -68,12 +76,33 @@ export function InstitutionDetail({ institution, isAuthenticated }: InstitutionD
 
       {isAuthenticated && (
         <div className="flex flex-col gap-4">
-          <div>
-            <Button nativeButton={false} render={<Link href={`/instituicoes/${institution.slug}/editar`} />}>
-              Editar
-            </Button>
+          <div className="flex flex-wrap gap-2">
+            {canManage && (
+              <>
+                <Button nativeButton={false} render={<Link href={`/instituicoes/${institution.slug}/editar`} />}>
+                  Editar
+                </Button>
+                <Button
+                  variant="outline"
+                  nativeButton={false}
+                  render={<Link href={`/instituicoes/${institution.slug}/solicitacoes`} />}
+                >
+                  Solicitações
+                </Button>
+              </>
+            )}
           </div>
-          <InstitutionStatusActions institution={institution} />
+
+          {canManage && <InstitutionStatusActions institution={institution} />}
+
+          {!alreadyMember && (
+            <FormRequestInstitutionMembership
+              institutionId={institution.id}
+              institutionSlug={institution.slug}
+              shouldProof={institution.shouldProof}
+              alreadyMember={alreadyMember}
+            />
+          )}
         </div>
       )}
     </div>
