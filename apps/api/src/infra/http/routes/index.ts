@@ -13,9 +13,14 @@ import { getInstitutionBySlugRoute } from './institutions/get-institution-by-slu
 import { registerInstitutionRoute } from './institutions/register-institution'
 import { updateInstitutionStatusRoute } from './institutions/update-institution-status'
 import { approveInstitutionMembershipRequestRoute } from './institutions-membership/approve-institution-membership-request'
+import { createInstitutionMemberRoute } from './institutions-membership/create-institution-member'
+import { fetchInstitutionMembersRoute } from './institutions-membership/fetch-institution-members'
 import { fetchInstitutionMembershipRequestsRoute } from './institutions-membership/fetch-institution-membership-requests'
+import { fetchMyInstitutionMembershipsRoute } from './institutions-membership/fetch-my-institution-memberships'
+import { getInstitutionMemberByIdRoute } from './institutions-membership/get-institution-member-by-id'
 import { rejectInstitutionMembershipRequestRoute } from './institutions-membership/reject-institution-membership-request'
 import { requestInstitutionMembershipRoute } from './institutions-membership/request-institution-membership'
+import { updateInstitutionMemberStatusRoute } from './institutions-membership/update-institution-member-status'
 import { fetchUserPreferenceTagsRoute } from './preference-tags/fetch-user-preference-tags'
 import { registerPreferenceTagRoute } from './preference-tags/register-preference-tag'
 import { fetchMyProjectsRoute } from './projects/fetch-my-projects'
@@ -102,14 +107,24 @@ export async function routes(app: FastifyInstance) {
   await app.register(registerInstitutionRoute)
   /** GET /institutions */
   await app.register(fetchInstitutionsRoute)
+  /** GET /institutions/me */
+  await app.register(fetchMyInstitutionMembershipsRoute)
   /** GET /institutions/slug/:slug */
   await app.register(getInstitutionBySlugRoute)
+  /** POST /institutions/:institutionId/status */
+  await app.register(updateInstitutionStatusRoute)
   /** PUT /institutions/:institutionId */
   await app.register(updateInstitutionRoute)
   /** GET /institutions/:institutionId */
   await app.register(getInstitutionByIdRoute)
-  /** POST /institutions/:institutionId/status */
-  await app.register(updateInstitutionStatusRoute)
+  /** POST /institutions/:institutionId/members */
+  await app.register(createInstitutionMemberRoute)
+  /** POST /institutions/:institutionId/members/:memberId/status */
+  await app.register(updateInstitutionMemberStatusRoute)
+  /** GET /institutions/:institutionId/members */
+  await app.register(fetchInstitutionMembersRoute)
+  /** GET /institutions/:institutionId/members/:memberId */
+  await app.register(getInstitutionMemberByIdRoute)
   /** POST /institutions/:institutionId/membership-requests */
   await app.register(requestInstitutionMembershipRoute)
   /** POST /institutions/:institutionId/membership-requests/:requestId/approve */
