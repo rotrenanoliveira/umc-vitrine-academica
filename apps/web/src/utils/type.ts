@@ -36,3 +36,23 @@ export const projectScheduledSchema = z.object({
 })
 
 export type ProjectScheduled = z.infer<typeof projectScheduledSchema>
+
+export const tagSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  slug: z.string(),
+})
+
+export type Tag = z.infer<typeof tagSchema>
+
+export const preferenceTagStatusSchema = z.enum(['ACTIVE', 'INACTIVE'])
+
+export const preferenceTagSchema = z.object({
+  id: z.string(),
+  tagId: z.string(),
+  userId: z.string(),
+  status: preferenceTagStatusSchema,
+  createdAt: z.string(),
+})
+
+export type PreferenceTag = z.infer<typeof preferenceTagSchema>

@@ -34,7 +34,7 @@ export function FormSignIn() {
   const [__, handleAuthenticate, isAuthenticating] = useFormState(actionAuthenticateWithAccessCode, {
     onSuccess: (message) => {
       toast.success(message)
-      router.push('/conta')
+      router.push('/')
       router.refresh()
     },
     onError: (message) => {
