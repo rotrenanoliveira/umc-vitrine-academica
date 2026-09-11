@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
 const links = [
+  { href: '/', label: 'Início' },
   { href: '/projetos', label: 'Projetos' },
   { href: '/conta', label: 'Conta' },
 ]
@@ -17,7 +18,10 @@ export function AppNav() {
       <p className="font-heading mb-6 text-sm font-semibold tracking-wider uppercase">Vitrine Acadêmica</p>
       <nav className="flex flex-col gap-1">
         {links.map((link) => {
-          const active = pathname === link.href || pathname.startsWith(`${link.href}/`)
+          const active =
+            link.href === '/'
+              ? pathname === '/'
+              : pathname === link.href || pathname.startsWith(`${link.href}/`)
 
           return (
             <Link
