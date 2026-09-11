@@ -1,8 +1,11 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import type { Project } from '@/utils/type'
 
+type ProjectWithCover = Project & { coverUrl: string | null }
+
 type HomeProjectsListProps = {
-  projects: Project[]
+  projects: ProjectWithCover[]
 }
 
 export function HomeProjectsList({ projects }: HomeProjectsListProps) {
@@ -13,12 +16,26 @@ export function HomeProjectsList({ projects }: HomeProjectsListProps) {
   return (
     <ul className="divide-y divide-border border border-border">
       {projects.map((project) => (
-        <li key={project.id} className="space-y-1 px-4 py-4">
-          <h2 className="font-heading text-lg font-medium">{project.title}</h2>
-          <p className="line-clamp-2 text-sm text-muted-foreground">{project.description}</p>
-          <p className="text-xs text-muted-foreground">
-            Publicado em {new Date(project.createdAt).toLocaleDateString('pt-BR')}
-          </p>
+        <li key={project.id} className="flex gap-4 px-4 py-4">
+          {project.coverUrl ? (
+            <Image
+              src={project.coverUrl}
+              alt={`Capa de ${project.title}`}
+              width={80}
+              height={80}
+              unoptimized
+              className="size-20 shrink-0 object-cover"
+            />
+          ) : (
+            <div className="size-20 shrink-0 bg-muted" aria-hidden />
+          )}
+          <div className="min-w-0 space-y-1">
+            <h2 className="font-heading text-lg font-medium">{project.title}</h2>
+            <p className="line-clamp-2 text-sm text-muted-foreground">{project.description}</p>
+            <p className="text-xs text-muted-foreground">
+              Publicado em {new Date(project.createdAt).toLocaleDateString('pt-BR')}
+            </p>
+          </div>
         </li>
       ))}
     </ul>
