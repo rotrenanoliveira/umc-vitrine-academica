@@ -9,13 +9,7 @@ export const institutionTypeEnum = pgEnum('institution_type', [
   'OTHER',
 ])
 
-export const institutionStatusEnum = pgEnum('institution_status', [
-  'DRAFT',
-  'ACTIVE',
-  'INACTIVE',
-  'SUSPENDED',
-  'ARCHIVED',
-])
+export const institutionStatusEnum = pgEnum('institution_status', ['ACTIVE', 'INACTIVE', 'SUSPENDED', 'ARCHIVED'])
 
 export const institutionOriginEnum = pgEnum('institution_origin', ['SEED', 'USER_REGISTRATION', 'ADMIN'])
 

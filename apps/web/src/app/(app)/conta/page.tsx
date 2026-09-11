@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { LogoutButton } from '@/components/auth/logout-button'
 import { FormRegisterPreferenceTags } from '@/components/preference-tag/form-register-preference-tags'
+import { Button } from '@/components/ui/button'
 import { requireUser } from '@/server/auth/require-user'
 import { getCachedUserPreferenceTags } from '@/server/http/routes/preference-tags/fetch-user-preference-tags'
 import { getCachedTags } from '@/server/http/routes/tags/fetch-tags'
@@ -37,7 +39,12 @@ export default async function AccountPage() {
               <dd>{user.status}</dd>
             </div>
           </dl>
-          <LogoutButton />
+          <div className="flex flex-wrap gap-2">
+            <Button nativeButton={false} variant="outline" render={<Link href="/conta/instituicoes" />}>
+              Solicitar entrada em instituição
+            </Button>
+            <LogoutButton />
+          </div>
         </div>
 
         <section className="space-y-4 border-t border-border pt-6">

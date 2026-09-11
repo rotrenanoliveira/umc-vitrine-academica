@@ -1,12 +1,5 @@
 import Link from 'next/link'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import type { Project } from '@/utils/type'
 
 const statusLabels: Record<Project['status'], string> = {
@@ -40,9 +33,7 @@ export function ProjectsTable({ data }: ProjectsTableProps) {
                 </Link>
               </TableCell>
               <TableCell>{statusLabels[project.status]}</TableCell>
-              <TableCell>
-                {new Date(project.createdAt).toLocaleString('pt-BR')}
-              </TableCell>
+              <TableCell>{new Date(project.createdAt).toLocaleString('pt-BR')}</TableCell>
             </TableRow>
           ))
         ) : (

@@ -12,7 +12,6 @@ export enum InstitutionType {
 }
 
 export enum InstitutionStatus {
-  DRAFT = 'DRAFT',
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',
   SUSPENDED = 'SUSPENDED',
