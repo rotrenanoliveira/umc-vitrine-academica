@@ -7,10 +7,7 @@ import { registerProjectTag } from '../http/routes/projects/register-project-tag
 import { revalidateProjects } from '../revalidate-projects'
 
 function parseTagIds(data: FormData): string[] {
-  return data
-    .getAll('tag-id')
-    .map(String)
-    .filter(Boolean)
+  return data.getAll('tag-id').map(String).filter(Boolean)
 }
 
 const registerProjectTagsSchema = z.object({

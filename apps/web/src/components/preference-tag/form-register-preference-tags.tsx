@@ -57,7 +57,10 @@ export function FormRegisterPreferenceTags({ tags, selectedTagIds }: FormRegiste
                   disabled={alreadySelected}
                   className="size-4 border border-input accent-primary"
                 />
-                <Label htmlFor={`preference-tag-${tag.id}`} className={alreadySelected ? 'text-muted-foreground' : undefined}>
+                <Label
+                  htmlFor={`preference-tag-${tag.id}`}
+                  className={alreadySelected ? 'text-muted-foreground' : undefined}
+                >
                   {tag.name}
                 </Label>
               </li>

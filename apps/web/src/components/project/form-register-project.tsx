@@ -47,6 +47,18 @@ export function FormRegisterProject({ variant = 'page' }: FormRegisterProjectPro
         <Textarea id="description" name="description" required rows={5} />
       </div>
 
+      <div className="space-y-2">
+        <Label htmlFor="cover-attachment">Capa</Label>
+        <Input
+          id="cover-attachment"
+          name="cover-attachment"
+          type="file"
+          required
+          accept="image/png,image/jpeg,image/jpg"
+        />
+        <p className="text-xs text-muted-foreground">Envie um PNG ou JPG de até 5 MB.</p>
+      </div>
+
       <div className="flex w-full items-end justify-end">
         <Button type="submit" disabled={isPending}>
           {!isPending && <span>Criar rascunho</span>}

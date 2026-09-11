@@ -6,10 +6,7 @@ import { registerPreferenceTag } from '../http/routes/preference-tags/register-p
 import { revalidatePreferenceTags } from '../revalidate-preference-tags'
 
 function parseTagIds(data: FormData): string[] {
-  return data
-    .getAll('tag-id')
-    .map(String)
-    .filter(Boolean)
+  return data.getAll('tag-id').map(String).filter(Boolean)
 }
 
 const registerPreferenceTagsSchema = z.object({

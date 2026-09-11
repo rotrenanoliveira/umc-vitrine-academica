@@ -23,10 +23,7 @@ export async function fetchPublishedProjectsRoute(app: FastifyInstance) {
       schema: {
         tags: ['projects'],
         summary: 'Listar projetos publicados',
-        description: 'Lista os projetos publicados cuja data de agendamento corresponde à data informada',
-        querystring: z.object({
-          date: z.coerce.date().optional().describe('A data de referência para filtrar publicações'),
-        }),
+        description: 'Lista todos os projetos com status PUBLISHED',
         response: {
           200: z.object({
             projects: z.array(projectSchema),
@@ -34,8 +31,8 @@ export async function fetchPublishedProjectsRoute(app: FastifyInstance) {
         },
       },
     },
-    async (request, reply) => {
-      return fetchPublishedProjectsController.handle(request.query, reply)
+    async (_request, reply) => {
+      return fetchPublishedProjectsController.handle(reply)
     },
   )
 }
