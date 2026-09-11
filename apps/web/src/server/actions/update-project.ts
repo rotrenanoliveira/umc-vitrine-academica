@@ -1,9 +1,9 @@
 'use server'
 
 import z from 'zod'
+import { projectStatusSchema } from '@/utils/type'
 import { updateProject } from '../http/routes/projects/update-project'
 import { revalidateProjects } from '../revalidate-projects'
-import { projectStatusSchema } from '@/utils/type'
 
 const updateProjectSchema = z.object({
   'project-id': z.uuid('Projeto inválido.'),

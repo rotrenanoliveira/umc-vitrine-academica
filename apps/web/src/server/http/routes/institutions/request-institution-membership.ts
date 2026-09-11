@@ -10,18 +10,12 @@ type RequestInstitutionMembershipParams = {
   proofAttachmentId?: string
 }
 
-export async function requestInstitutionMembership({
-  institutionId,
-  ...data
-}: RequestInstitutionMembershipParams) {
+export async function requestInstitutionMembership({ institutionId, ...data }: RequestInstitutionMembershipParams) {
   return await fetcher(
     api
-      .post<{ request: InstitutionMembershipRequest }>(
-        `api/v1/institutions/${institutionId}/membership-requests`,
-        {
-          json: data,
-        },
-      )
+      .post<{ request: InstitutionMembershipRequest }>(`api/v1/institutions/${institutionId}/membership-requests`, {
+        json: data,
+      })
       .json(),
   )
 }

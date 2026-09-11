@@ -6,9 +6,7 @@ import type { Tag } from '@/utils/type'
 import { api } from '../../api-client'
 
 export async function fetchTags() {
-  const [response, responseError] = await fetcher(
-    api.get<{ tags: Tag[] }>('api/v1/tags', { cache: 'no-store' }).json(),
-  )
+  const [response, responseError] = await fetcher(api.get<{ tags: Tag[] }>('api/v1/tags', { cache: 'no-store' }).json())
 
   if (responseError) throw new Error(responseError.message)
 

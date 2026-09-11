@@ -20,9 +20,7 @@ export function AppNav() {
       <nav className="flex flex-col gap-1">
         {links.map((link) => {
           const active =
-            link.href === '/'
-              ? pathname === '/'
-              : pathname === link.href || pathname.startsWith(`${link.href}/`)
+            link.href === '/' ? pathname === '/' : pathname === link.href || pathname.startsWith(`${link.href}/`)
 
           return (
             <Link
