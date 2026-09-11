@@ -130,3 +130,14 @@ export const institutionMembershipRequestSchema = z.object({
 
 export type InstitutionMembershipRequest = z.infer<typeof institutionMembershipRequestSchema>
 export type InstitutionMembershipRequestStatus = z.infer<typeof institutionMembershipRequestStatusSchema>
+
+export const attachmentSchema = z.object({
+  id: z.string(),
+  storageKey: z.string(),
+  mimeType: z.string(),
+  name: z.string(),
+  size: z.number(),
+  createdAt: z.string(),
+})
+
+export type Attachment = z.infer<typeof attachmentSchema>
