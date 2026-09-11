@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { FormRelateProjectTags } from '@/components/project/form-relate-project-tags'
 import { FormUpdateProject } from '@/components/project/form-update-project'
 import {
   Breadcrumb,
@@ -12,6 +13,7 @@ import {
 } from '@/components/ui/breadcrumb'
 import { requireUser } from '@/server/auth/require-user'
 import { getProject } from '@/server/http/routes/projects/get-project'
+import { getCachedTags } from '@/server/http/routes/tags/fetch-tags'
 
 export const metadata: Metadata = {
   title: 'Editar projeto',
@@ -24,7 +26,7 @@ type PageProps = {
 export default async function EditProjectPage({ params }: PageProps) {
   const { id } = await params
   const user = await requireUser()
-  const { project } = await getProject(id)
+  const [{ project }, { tags }] = await Promise.all([getProject(id), getCachedTags()])
 
   if (user.id !== project.authorId) {
     notFound()
@@ -51,8 +53,13 @@ export default async function EditProjectPage({ params }: PageProps) {
       </header>
 
       <div className="flex flex-1 items-start justify-center px-4 py-8">
-        <div className="w-full max-w-lg border border-border p-6">
-          <FormUpdateProject project={project} />
+        <div className="w-full max-w-lg space-y-8">
+          <div className="border border-border p-6">
+            <FormUpdateProject project={project} />
+          </div>
+          <div className="border border-border p-6">
+            <FormRelateProjectTags project={project} tags={tags} />
+          </div>
         </div>
       </div>
     </div>
