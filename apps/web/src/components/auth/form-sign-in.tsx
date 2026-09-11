@@ -52,7 +52,7 @@ export function FormSignIn() {
   if (step === 'code') {
     return (
       <form className="space-y-4" onSubmit={handleAuthenticate}>
-        <input type="hidden" name="email" value={email} />
+        <input type="hidden" name="email" value={email ?? ''} />
 
         <div className="space-y-2">
           <Label htmlFor="code">Código de acesso</Label>
@@ -93,7 +93,7 @@ export function FormSignIn() {
     <form className="space-y-4" onSubmit={handleRequestCodeSubmit}>
       <div className="space-y-2">
         <Label htmlFor="email">E-mail</Label>
-        <Input id="email" name="email" type="email" autoComplete="email" defaultValue={email} required />
+        <Input id="email" name="email" type="email" autoComplete="email" defaultValue={email ?? ''} required />
       </div>
 
       <div className="flex w-full items-end justify-end">
