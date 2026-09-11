@@ -29,7 +29,7 @@ export async function resetDatabase() {
   }
 
   await databaseForTest.execute(
-    sql`TRUNCATE TABLE "users", "attachments", "tags", "preference_tags", "projects", "project_tags", "project_scheduled", "access_codes", "sessions" CASCADE`,
+    sql`TRUNCATE TABLE "users", "attachments", "tags", "preference_tags", "projects", "project_tags", "project_scheduled", "access_codes", "sessions", "institutions", "institution_members", "institution_membership_requests" CASCADE`,
   )
 }
 
