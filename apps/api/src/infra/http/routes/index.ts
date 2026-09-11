@@ -6,6 +6,12 @@ import { authenticateWithAccessCodeRoute } from './auth/authenticate-with-access
 import { getMeRoute } from './auth/get-me'
 import { logoutRoute } from './auth/logout'
 import { requestAccessCodeRoute } from './auth/request-access-code'
+import { updateInstitutionRoute } from './institutions/edit-institution'
+import { fetchInstitutionsRoute } from './institutions/fetch-institutions'
+import { getInstitutionByIdRoute } from './institutions/get-institution-by-id'
+import { getInstitutionBySlugRoute } from './institutions/get-institution-by-slug'
+import { registerInstitutionRoute } from './institutions/register-institution'
+import { updateInstitutionStatusRoute } from './institutions/update-institution-status'
 import { fetchUserPreferenceTagsRoute } from './preference-tags/fetch-user-preference-tags'
 import { registerPreferenceTagRoute } from './preference-tags/register-preference-tag'
 import { fetchMyProjectsRoute } from './projects/fetch-my-projects'
@@ -86,4 +92,18 @@ export async function routes(app: FastifyInstance) {
   await app.register(registerProjectTagRoute)
   /** GET /users/:userId/projects-of-interest */
   await app.register(fetchProjectsOfInterestRoute)
+
+  /** Institutions routes */
+  /** POST /institutions */
+  await app.register(registerInstitutionRoute)
+  /** GET /institutions */
+  await app.register(fetchInstitutionsRoute)
+  /** GET /institutions/slug/:slug */
+  await app.register(getInstitutionBySlugRoute)
+  /** PUT /institutions/:institutionId */
+  await app.register(updateInstitutionRoute)
+  /** GET /institutions/:institutionId */
+  await app.register(getInstitutionByIdRoute)
+  /** POST /institutions/:institutionId/status */
+  await app.register(updateInstitutionStatusRoute)
 }

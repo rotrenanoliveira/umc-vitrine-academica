@@ -9,6 +9,8 @@ import {
   type InstitutionProps,
   InstitutionType,
 } from '@/domain/institution/enterprise/entities/institutions'
+import { db } from '@/infra/database/drizzle/client'
+import { DrizzleInstitutionsRepository } from '@/infra/database/repositories/drizzle-institutions-repository'
 
 export function makeInstitution(override: Partial<InstitutionProps> = {}, id?: UniqueEntityId) {
   const name = override.name ?? faker.company.name()
@@ -27,6 +29,16 @@ export function makeInstitution(override: Partial<InstitutionProps> = {}, id?: U
     },
     id,
   )
+
+  return { institution }
+}
+
+export async function makeInstitutionOnDatabase(override: Partial<InstitutionProps> = {}, id?: UniqueEntityId) {
+  const { institution } = makeInstitution(override, id)
+
+  const institutionsRepository = new DrizzleInstitutionsRepository(db)
+
+  await institutionsRepository.create(institution)
 
   return { institution }
 }
