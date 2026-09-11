@@ -67,15 +67,15 @@ function RoleSelect() {
 function ProofAttachmentField() {
   return (
     <div className="space-y-2">
-      <Label htmlFor="proof-attachment-id">ID do comprovante (anexo)</Label>
+      <Label htmlFor="proof-attachment">Comprovante</Label>
       <Input
-        id="proof-attachment-id"
-        name="proof-attachment-id"
-        type="text"
+        id="proof-attachment"
+        name="proof-attachment"
+        type="file"
         required
-        placeholder="Cole o UUID do anexo"
+        accept="image/png,image/jpeg,image/jpg,application/pdf"
       />
-      <p className="text-xs text-muted-foreground">Informe o ID do comprovante (anexo).</p>
+      <p className="text-xs text-muted-foreground">Envie um PNG, JPG ou PDF de até 5 MB.</p>
     </div>
   )
 }
@@ -159,9 +159,7 @@ function FormRequestInstitutionMembershipPicker({ institutions }: { institutions
   })
 
   if (institutions.length === 0) {
-    return (
-      <p className="text-sm text-muted-foreground">Você já participa de todas as instituições disponíveis.</p>
-    )
+    return <p className="text-sm text-muted-foreground">Você já participa de todas as instituições disponíveis.</p>
   }
 
   return (
