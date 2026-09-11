@@ -83,3 +83,50 @@ export type Institution = z.infer<typeof institutionSchema>
 export type InstitutionType = z.infer<typeof institutionTypeSchema>
 export type InstitutionStatus = z.infer<typeof institutionStatusSchema>
 export type InstitutionOrigin = z.infer<typeof institutionOriginSchema>
+
+export const institutionMemberRoleSchema = z.enum([
+  'STUDENT',
+  'PROFESSOR',
+  'TEACHER',
+  'MANAGER',
+  'ADMINISTRATIVE_OFFICE',
+])
+
+export const institutionMemberStatusSchema = z.enum([
+  'ACTIVE',
+  'INACTIVE',
+  'SUSPENDED',
+  'FINISHED',
+  'PENDING',
+  'REJECTED',
+])
+
+export const institutionMemberSchema = z.object({
+  id: z.string(),
+  institutionId: z.string(),
+  userId: z.string(),
+  role: institutionMemberRoleSchema,
+  status: institutionMemberStatusSchema,
+  createdAt: z.string(),
+  updatedAt: z.string().nullable(),
+})
+
+export type InstitutionMember = z.infer<typeof institutionMemberSchema>
+export type InstitutionMemberRole = z.infer<typeof institutionMemberRoleSchema>
+export type InstitutionMemberStatus = z.infer<typeof institutionMemberStatusSchema>
+
+export const institutionMembershipRequestStatusSchema = z.enum(['PENDING', 'APPROVED', 'REJECTED'])
+
+export const institutionMembershipRequestSchema = z.object({
+  id: z.string(),
+  institutionId: z.string(),
+  userId: z.string(),
+  role: institutionMemberRoleSchema,
+  status: institutionMembershipRequestStatusSchema,
+  proofAttachmentId: z.string().nullable(),
+  createdAt: z.string(),
+  updatedAt: z.string().nullable(),
+})
+
+export type InstitutionMembershipRequest = z.infer<typeof institutionMembershipRequestSchema>
+export type InstitutionMembershipRequestStatus = z.infer<typeof institutionMembershipRequestStatusSchema>
