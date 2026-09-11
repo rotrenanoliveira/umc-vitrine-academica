@@ -1,4 +1,5 @@
 import { getCachedMyProjects } from '@/server/http/routes/projects/get-my-projects'
+import { resolveProjectsWithCover } from '@/server/projects/resolve-project-cover-url'
 import type { ProjectsFilters } from '../search-params'
 import { ProjectsTable } from './projects-table'
 
@@ -8,5 +9,7 @@ export async function ProjectsList({ filters, userId }: { filters: ProjectsFilte
     status: filters.status ?? undefined,
   })
 
-  return <ProjectsTable data={projects} />
+  const data = await resolveProjectsWithCover(projects)
+
+  return <ProjectsTable data={data} />
 }
