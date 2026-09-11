@@ -12,6 +12,10 @@ import { getInstitutionByIdRoute } from './institutions/get-institution-by-id'
 import { getInstitutionBySlugRoute } from './institutions/get-institution-by-slug'
 import { registerInstitutionRoute } from './institutions/register-institution'
 import { updateInstitutionStatusRoute } from './institutions/update-institution-status'
+import { approveInstitutionMembershipRequestRoute } from './institutions-membership/approve-institution-membership-request'
+import { fetchInstitutionMembershipRequestsRoute } from './institutions-membership/fetch-institution-membership-requests'
+import { rejectInstitutionMembershipRequestRoute } from './institutions-membership/reject-institution-membership-request'
+import { requestInstitutionMembershipRoute } from './institutions-membership/request-institution-membership'
 import { fetchUserPreferenceTagsRoute } from './preference-tags/fetch-user-preference-tags'
 import { registerPreferenceTagRoute } from './preference-tags/register-preference-tag'
 import { fetchMyProjectsRoute } from './projects/fetch-my-projects'
@@ -106,4 +110,12 @@ export async function routes(app: FastifyInstance) {
   await app.register(getInstitutionByIdRoute)
   /** POST /institutions/:institutionId/status */
   await app.register(updateInstitutionStatusRoute)
+  /** POST /institutions/:institutionId/membership-requests */
+  await app.register(requestInstitutionMembershipRoute)
+  /** POST /institutions/:institutionId/membership-requests/:requestId/approve */
+  await app.register(approveInstitutionMembershipRequestRoute)
+  /** POST /institutions/:institutionId/membership-requests/:requestId/reject */
+  await app.register(rejectInstitutionMembershipRequestRoute)
+  /** GET /institutions/:institutionId/membership-requests */
+  await app.register(fetchInstitutionMembershipRequestsRoute)
 }
