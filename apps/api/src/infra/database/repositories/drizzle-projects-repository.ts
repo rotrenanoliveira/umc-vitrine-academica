@@ -29,7 +29,11 @@ export class DrizzleProjectsRepository implements ProjectsRepository {
       return []
     }
 
-    const rows = await this.db.select().from(projects).where(inArray(projects.id, ids))
+    const rows = await this.db
+      .select()
+      .from(projects)
+      .where(inArray(projects.id, ids))
+      .orderBy(desc(projects.createdAt))
 
     return rows.map(DrizzleProjectMapper.toDomain)
   }

@@ -16,18 +16,19 @@ export function HomeProjectsList({ projects }: HomeProjectsListProps) {
   return (
     <ul className="divide-y divide-border border border-border">
       {projects.map((project) => (
-        <li key={project.id} className="flex gap-4 px-4 py-4">
+        <li key={project.id} className="space-y-4 px-4 py-4 lg:flex lg:gap-4">
           {project.coverUrl ? (
-            <Image
-              src={project.coverUrl}
-              alt={`Capa de ${project.title}`}
-              width={80}
-              height={80}
-              unoptimized
-              className="size-20 shrink-0 object-cover"
-            />
+            <div className="relative w-96 aspect-video overflow-hidden">
+              <Image
+                src={project.coverUrl}
+                alt={`Capa de ${project.title}`}
+                fill
+                unoptimized
+                className="object-cover"
+              />
+            </div>
           ) : (
-            <div className="size-20 shrink-0 bg-muted" aria-hidden />
+            <div className="h-90 aspect-video bg-muted" aria-hidden />
           )}
           <div className="min-w-0 space-y-1">
             <h2 className="font-heading text-lg font-medium">{project.title}</h2>

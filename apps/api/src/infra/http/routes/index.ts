@@ -26,6 +26,7 @@ import { registerPreferenceTagRoute } from './preference-tags/register-preferenc
 import { fetchMyProjectsRoute } from './projects/fetch-my-projects'
 import { fetchProjectsOfInterestRoute } from './projects/fetch-projects-of-interest'
 import { fetchPublishedProjectsRoute } from './projects/fetch-published-projects'
+import { fetchPublishedProjectsTodayRoute } from './projects/fetch-published-projects-today'
 import { getProjectByIdRoute } from './projects/get-project-by-id'
 import { publishScheduledProjectsRoute } from './projects/publish-scheduled-projects'
 import { registerProjectRoute } from './projects/register-project'
@@ -89,6 +90,8 @@ export async function routes(app: FastifyInstance) {
   await app.register(publishScheduledProjectsRoute)
   /** GET /projects/published */
   await app.register(fetchPublishedProjectsRoute)
+  /** GET /projects/published/today */
+  await app.register(fetchPublishedProjectsTodayRoute)
   /** POST /projects/:projectId/schedule */
   await app.register(scheduleProjectRoute)
   /** PUT /projects/:projectId */
