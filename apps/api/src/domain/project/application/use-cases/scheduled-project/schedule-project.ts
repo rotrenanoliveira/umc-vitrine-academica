@@ -3,6 +3,7 @@ import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { ProjectStatus } from '../../../enterprise/entities/project'
 import { ProjectScheduled } from '../../../enterprise/entities/project-scheduled'
 import { InvalidProjectStatusError } from '../../_errors/invalid-project-status-error'
+import { NotProjectOwnerError } from '../../_errors/not-project-owner-error'
 import { ProjectAlreadyScheduledError } from '../../_errors/project-already-scheduled-error'
 import { ProjectNotFoundError } from '../../_errors/project-not-found-error'
 import type { ProjectScheduledRepository } from '../../repositories/project-scheduled-repository'
@@ -10,11 +11,12 @@ import type { ProjectsRepository } from '../../repositories/projects-repositorie
 
 interface ScheduleProjectUseCaseRequest {
   projectId: string
+  authorId: string
   publishedIn: Date
 }
 
 type ScheduleProjectUseCaseResponse = Either<
-  ProjectNotFoundError | ProjectAlreadyScheduledError | InvalidProjectStatusError,
+  ProjectNotFoundError | NotProjectOwnerError | ProjectAlreadyScheduledError | InvalidProjectStatusError,
   { projectScheduled: ProjectScheduled }
 >
 
@@ -24,11 +26,19 @@ export class ScheduleProjectUseCase {
     private readonly projectScheduledRepository: ProjectScheduledRepository,
   ) {}
 
-  async execute({ projectId, publishedIn }: ScheduleProjectUseCaseRequest): Promise<ScheduleProjectUseCaseResponse> {
+  async execute({
+    projectId,
+    authorId,
+    publishedIn,
+  }: ScheduleProjectUseCaseRequest): Promise<ScheduleProjectUseCaseResponse> {
     const project = await this.projectsRepository.findById(projectId)
 
     if (!project) {
       return left(new ProjectNotFoundError())
+    }
+
+    if (project.author.toString() !== authorId) {
+      return left(new NotProjectOwnerError())
     }
 
     if (project.status !== ProjectStatus.SKETCH) {

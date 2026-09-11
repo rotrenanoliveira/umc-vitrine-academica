@@ -2,8 +2,10 @@ import { makeProject } from '@tests/factories/make-project'
 import { makeProjectScheduled } from '@tests/factories/make-project-scheduled'
 import { InMemoryProjectScheduledRepository } from '@tests/repositories/in-memory-project-scheduled-repository'
 import { InMemoryProjectsRepository } from '@tests/repositories/in-memory-projects-repository'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { ProjectStatus } from '../../../enterprise/entities/project'
 import { InvalidProjectStatusError } from '../../_errors/invalid-project-status-error'
+import { NotProjectOwnerError } from '../../_errors/not-project-owner-error'
 import { ProjectAlreadyScheduledError } from '../../_errors/project-already-scheduled-error'
 import { ProjectNotFoundError } from '../../_errors/project-not-found-error'
 import { ScheduleProjectUseCase } from './schedule-project'
@@ -27,6 +29,7 @@ describe('(UC) - Schedule Project', () => {
 
     const result = await sut.execute({
       projectId: project.id.toString(),
+      authorId: project.author.toString(),
       publishedIn,
     })
 
@@ -43,6 +46,7 @@ describe('(UC) - Schedule Project', () => {
   it('should not be able to schedule a project that does not exist', async () => {
     const result = await sut.execute({
       projectId: 'non-existent-project',
+      authorId: new UniqueEntityId().toString(),
       publishedIn: new Date(),
     })
 
@@ -53,12 +57,30 @@ describe('(UC) - Schedule Project', () => {
     }
   })
 
+  it('should not be able to schedule a project as non-owner', async () => {
+    const { project } = makeProject()
+    projectsRepository.items.push(project)
+
+    const result = await sut.execute({
+      projectId: project.id.toString(),
+      authorId: new UniqueEntityId().toString(),
+      publishedIn: new Date(),
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(NotProjectOwnerError)
+    }
+  })
+
   it('should not be able to schedule a project that is not a sketch', async () => {
     const { project } = makeProject({ status: ProjectStatus.PUBLISHED })
     projectsRepository.items.push(project)
 
     const result = await sut.execute({
       projectId: project.id.toString(),
+      authorId: project.author.toString(),
       publishedIn: new Date(),
     })
 
@@ -78,6 +100,7 @@ describe('(UC) - Schedule Project', () => {
 
     const result = await sut.execute({
       projectId: project.id.toString(),
+      authorId: project.author.toString(),
       publishedIn: new Date(),
     })
 
