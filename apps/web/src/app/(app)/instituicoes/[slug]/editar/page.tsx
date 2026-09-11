@@ -35,9 +35,7 @@ export default async function EditInstitutionPage({ params }: PageProps) {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink render={<Link href={`/instituicoes/${institution.slug}`} />}>
-                Detalhe
-              </BreadcrumbLink>
+              <BreadcrumbLink render={<Link href={`/instituicoes/${institution.slug}`} />}>Detalhe</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>

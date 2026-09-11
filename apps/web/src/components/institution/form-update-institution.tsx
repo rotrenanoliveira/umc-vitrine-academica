@@ -39,25 +39,12 @@ export function FormUpdateInstitution({ institution }: FormUpdateInstitutionProp
 
       <div className="space-y-2">
         <Label htmlFor="name">Nome</Label>
-        <Input
-          id="name"
-          name="name"
-          type="text"
-          required
-          maxLength={200}
-          defaultValue={institution.name}
-        />
+        <Input id="name" name="name" type="text" required maxLength={200} defaultValue={institution.name} />
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="description">Descrição</Label>
-        <Textarea
-          id="description"
-          name="description"
-          required
-          rows={5}
-          defaultValue={institution.description}
-        />
+        <Textarea id="description" name="description" required rows={5} defaultValue={institution.description} />
       </div>
 
       <div className="space-y-2">
@@ -72,24 +59,14 @@ export function FormUpdateInstitution({ institution }: FormUpdateInstitutionProp
       </div>
 
       <div className="flex items-start gap-2">
-        <Checkbox
-          id="should-proof"
-          name="should-proof"
-          value="on"
-          defaultChecked={institution.shouldProof}
-        />
+        <Checkbox id="should-proof" name="should-proof" value="on" defaultChecked={institution.shouldProof} />
         <Label htmlFor="should-proof" className="font-normal leading-snug">
           Exigir comprovante para solicitar entrada
         </Label>
       </div>
 
       <div className="flex items-start gap-2">
-        <Checkbox
-          id="should-verify"
-          name="should-verify"
-          value="on"
-          defaultChecked={institution.shouldVerify}
-        />
+        <Checkbox id="should-verify" name="should-verify" value="on" defaultChecked={institution.shouldVerify} />
         <Label htmlFor="should-verify" className="font-normal leading-snug">
           Exigir verificação
         </Label>

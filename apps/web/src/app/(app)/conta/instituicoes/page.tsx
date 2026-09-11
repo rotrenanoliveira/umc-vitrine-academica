@@ -28,8 +28,7 @@ export default async function AccountInstitutionsPage() {
 
   const eligibleInstitutions = institutions
     .filter(
-      (institution) =>
-        institution.status === 'ACTIVE' && !isActiveInstitutionMember(members, institution.id, user.id),
+      (institution) => institution.status === 'ACTIVE' && !isActiveInstitutionMember(members, institution.id, user.id),
     )
     .map((institution) => ({
       id: institution.id,

@@ -10,10 +10,7 @@ export async function InstitutionsList({ filters }: { filters: InstitutionsFilte
   const filtered = institutions.filter((institution) => {
     if (filters.status && institution.status !== filters.status) return false
     if (!query) return true
-    return (
-      institution.name.toLowerCase().includes(query) ||
-      institution.slug.toLowerCase().includes(query)
-    )
+    return institution.name.toLowerCase().includes(query) || institution.slug.toLowerCase().includes(query)
   })
 
   return <InstitutionsTable data={filtered} />

@@ -32,12 +32,7 @@ type InstitutionDetailProps = {
   canManage: boolean
 }
 
-export function InstitutionDetail({
-  institution,
-  isAuthenticated,
-  alreadyMember,
-  canManage,
-}: InstitutionDetailProps) {
+export function InstitutionDetail({ institution, isAuthenticated, alreadyMember, canManage }: InstitutionDetailProps) {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
@@ -81,6 +76,13 @@ export function InstitutionDetail({
               <>
                 <Button nativeButton={false} render={<Link href={`/instituicoes/${institution.slug}/editar`} />}>
                   Editar
+                </Button>
+                <Button
+                  variant="outline"
+                  nativeButton={false}
+                  render={<Link href={`/instituicoes/${institution.slug}/membros`} />}
+                >
+                  Membros
                 </Button>
                 <Button
                   variant="outline"
