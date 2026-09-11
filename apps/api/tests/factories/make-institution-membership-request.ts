@@ -5,6 +5,8 @@ import {
   type InstitutionMembershipRequestProps,
   InstitutionMembershipRequestRole,
 } from '@/domain/institution/enterprise/entities/institution-membership-request'
+import { db } from '@/infra/database/drizzle/client'
+import { DrizzleInstitutionMembershipRequestsRepository } from '@/infra/database/repositories/drizzle-institution-membership-requests-repository'
 
 export function makeInstitutionMembershipRequest(
   override: Partial<InstitutionMembershipRequestProps> = {},
@@ -19,6 +21,19 @@ export function makeInstitutionMembershipRequest(
     },
     id,
   )
+
+  return { request }
+}
+
+export async function makeInstitutionMembershipRequestOnDatabase(
+  override: Partial<InstitutionMembershipRequestProps> = {},
+  id?: UniqueEntityId,
+) {
+  const { request } = makeInstitutionMembershipRequest(override, id)
+
+  const institutionMembershipRequestsRepository = new DrizzleInstitutionMembershipRequestsRepository(db)
+
+  await institutionMembershipRequestsRepository.create(request)
 
   return { request }
 }
