@@ -56,3 +56,30 @@ export const preferenceTagSchema = z.object({
 })
 
 export type PreferenceTag = z.infer<typeof preferenceTagSchema>
+
+export const institutionTypeSchema = z.enum(['UNIVERSITY', 'COLLEGE', 'CENTER', 'TECHNICAL_COLLEGE', 'OTHER'])
+
+export const institutionStatusSchema = z.enum(['ACTIVE', 'INACTIVE', 'SUSPENDED', 'ARCHIVED'])
+
+export const institutionOriginSchema = z.enum(['SEED', 'USER_REGISTRATION', 'ADMIN'])
+
+export const institutionSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  slug: z.string(),
+  type: institutionTypeSchema,
+  status: institutionStatusSchema,
+  origin: institutionOriginSchema,
+  description: z.string(),
+  registerBy: z.string(),
+  shouldProof: z.boolean(),
+  shouldVerify: z.boolean(),
+  domain: z.string().nullable(),
+  createdAt: z.string(),
+  updatedAt: z.string().nullable(),
+})
+
+export type Institution = z.infer<typeof institutionSchema>
+export type InstitutionType = z.infer<typeof institutionTypeSchema>
+export type InstitutionStatus = z.infer<typeof institutionStatusSchema>
+export type InstitutionOrigin = z.infer<typeof institutionOriginSchema>
