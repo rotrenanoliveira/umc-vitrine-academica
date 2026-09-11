@@ -7,6 +7,7 @@ import { api } from '../../api-client'
 type RegisterProjectParams = {
   title: string
   description: string
+  attachments: string[]
 }
 
 export async function registerProject(data: RegisterProjectParams) {
