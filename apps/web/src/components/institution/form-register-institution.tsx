@@ -14,8 +14,7 @@ import { actionRegisterInstitution } from '@/server/actions/register-institution
 
 const typeOptions = [
   { value: 'UNIVERSITY', label: 'Universidade' },
-  { value: 'COLLEGE', label: 'Faculdade' },
-  { value: 'CENTER', label: 'Centro' },
+  { value: 'CENTER', label: 'Centro Educacional' },
   { value: 'TECHNICAL_COLLEGE', label: 'Escola técnica' },
   { value: 'OTHER', label: 'Outro' },
 ] as const
